@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Vagas | Front-End Angular Simulado</title>
+    <!-- Carregamento do Tailwind CSS para design moderno e responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* Estilos Customizados para Criatividade e Design */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc; /* Cor de fundo suave */
+        }
+        .header-bg {
+            background: linear-gradient(90deg, #1c3d5e 0%, #1e40af 100%); /* Azul Escuro */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .card-shadow {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border-left: 5px solid #3b82f6; /* Borda azul para destaque */
+        }
+        .card-shadow:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .btn-primary {
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #1e40af;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#3b82f6',
+                        'dark-navy': '#1c3d5e',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Navbar/Header Componente -->
+    <header class="header-bg p-4 sticky top-0 z-10">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="#/" class="text-2xl font-bold text-white tracking-wider hover:text-gray-200 transition duration-300">
+                <i class="fas fa-briefcase mr-2"></i> JobFinder
+            </a>
+            <nav>
+                <a href="#/" class="text-white px-3 py-2 rounded-lg hover:bg-white hover:text-dark-navy transition duration-300 font-medium">
+                    Listagem de Vagas
+                </a>
+                <a href="#/sobre" class="text-white px-3 py-2 rounded-lg hover:bg-white hover:text-dark-navy transition duration-300 font-medium">
+                    Sobre
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Content Area (Simulando o <router-outlet>) -->
+    <main id="app-root" class="flex-grow p-4 sm:p-8">
+        <!-- O conteúdo das rotas será injetado aqui pelo JavaScript -->
+        <div class="max-w-4xl mx-auto text-center py-16">
+            <i class="fas fa-spinner fa-spin text-primary-blue text-4xl"></i>
+            <p class="mt-4 text-gray-600">Carregando aplicação...</p>
+        </div>
+    </main>
+
+    <!-- Footer Componente -->
+    <footer class="bg-gray-800 text-white p-4 mt-auto">
+        <div class="max-w-6xl mx-auto text-center text-sm">
+            <p>&copy; 2025 Sistema de Cadastro de Vagas. Desenvolvido para UC8 - Simulação Front-End Spring Boot.</p>
+        </div>
+    </footer>
+
+    <!-- Lógica de Roteamento e Componentes (JavaScript) -->
+    <script>
+        const appRoot = document.getElementById('app-root');
+        let vagasData = []; // Variável global para armazenar os dados da API
+
+        // 1. Funções de Componentes (Views/Rotas)
+
+        /**
+         * Componente para a Listagem de Vagas (Rota: /)
+         * @param {Array} vagas - Lista de objetos de vagas.
+         */
+        function renderVacancyList(vagas) {
+            let listHtml = vagas.map(vaga => `
+                <div class="bg-white p-6 rounded-xl card-shadow flex flex-col justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-dark-navy">${vaga.titulo}</h2>
+                        <p class="text-sm text-primary-blue mt-1 mb-3 font-semibold">
+                            <i class="fas fa-map-marker-alt mr-1"></i> ${vaga.localizacao}
+                        </p>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">${vaga.descricao}</p>
+                        <div class="flex items-center space-x-4 text-gray-500 text-sm mb-4">
+                            <span class="inline-flex items-center"><i class="fas fa-money-bill-wave mr-1"></i> Salário: ${vaga.salario}</span>
+                        </div>
+                    </div>
+                    <a href="#/vaga/${vaga.id}" class="mt-4 w-full text-center bg-primary-blue text-white py-2 px-4 rounded-lg btn-primary font-semibold">
+                        Ver Detalhes <i class="fas fa-chevron-right ml-1"></i>
+                    </a>
+                </div>
+            `).join('');
+
+            return `
+                <div class="max-w-6xl mx-auto pt-4">
+                    <h1 class="text-3xl font-extrabold text-dark-navy mb-6 text-center">Vagas Disponíveis (${vagas.length})</h1>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        ${listHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        /**
+         * Componente para Detalhe da Vaga (Rota: /vaga/:id)
+         * @param {number} id - ID da vaga.
+         */
+        function renderVacancyDetail(id) {
+            const vaga = vagasData.find(v => v.id === parseInt(id));
+
+            if (!vaga) {
+                return `
+                    <div class="max-w-xl mx-auto p-8 bg-white rounded-xl shadow-lg text-center">
+                        <i class="fas fa-exclamation-triangle text-red-500 text-4xl mb-4"></i>
+                        <h1 class="text-2xl font-bold text-red-700">Vaga Não Encontrada</h1>
+                        <p class="text-gray-600 mt-2">O ID da vaga (${id}) não corresponde a nenhuma vaga em nosso sistema.</p>
+                        <a href="#/" class="mt-6 inline-block bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300">
+                            <i class="fas fa-arrow-left mr-2"></i> Voltar para a Lista
+                        </a>
+                    </div>
+                `;
+            }
+
+            const requisitosHtml = vaga.requisitos.map(req => `
+                <li class="flex items-start mb-2 text-gray-700">
+                    <i class="fas fa-check-circle text-primary-blue mr-2 mt-1 flex-shrink-0"></i>
+                    ${req}
+                </li>
+            `).join('');
+
+            return `
+                <div class="max-w-4xl mx-auto p-4 sm:p-8">
+                    <a href="#/" class="text-primary-blue hover:text-dark-navy transition duration-300 font-medium mb-6 inline-block">
+                        <i class="fas fa-arrow-left mr-2"></i> Voltar para a Listagem
+                    </a>
+                    <div class="bg-white rounded-xl shadow-2xl p-6 md:p-10">
+                        <span class="inline-block bg-primary-blue text-white text-xs font-semibold px-3 py-1 rounded-full mb-3 uppercase">
+                            Nova Oportunidade
+                        </span>
+                        <h1 class="text-4xl font-extrabold text-dark-navy mb-4">${vaga.titulo}</h1>
+                        <div class="flex flex-wrap gap-x-6 gap-y-2 text-lg font-medium text-gray-700 mb-6 border-b pb-4">
+                            <p><i class="fas fa-map-marker-alt text-primary-blue mr-2"></i> ${vaga.localizacao}</p>
+                            <p><i class="fas fa-money-bill-wave text-primary-blue mr-2"></i> ${vaga.salario}</p>
+                        </div>
+
+                        <h2 class="text-2xl font-bold text-dark-navy mt-6 mb-3 border-b pb-2">Descrição da Vaga</h2>
+                        <p class="text-gray-600 leading-relaxed">${vaga.descricao}</p>
+
+                        <h2 class="text-2xl font-bold text-dark-navy mt-8 mb-3 border-b pb-2">Requisitos Essenciais</h2>
+                        <ul class="list-none space-y-2">
+                            ${requisitosHtml}
+                        </ul>
+
+                        <div class="mt-10 text-center">
+                            <button class="bg-green-600 text-white text-xl py-3 px-8 rounded-lg font-bold hover:bg-green-700 transition duration-300 shadow-md">
+                                Candidatar-se Agora! <i class="fas fa-paper-plane ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        /**
+         * Componente para a Rota Sobre (Exemplo de Página Adicional)
+         */
+        function renderAboutPage() {
+            return `
+                <div class="max-w-2xl mx-auto p-8 bg-white rounded-xl shadow-lg">
+                    <h1 class="text-3xl font-extrabold text-dark-navy mb-4 text-center">Sobre o Sistema de Vagas</h1>
+                    <p class="text-gray-600 mb-6 text-center">Este é um projeto de simulação de front-end desenvolvido para a UC8.</p>
+
+                    <div class="space-y-4">
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <h2 class="text-xl font-semibold text-primary-blue mb-2">Conceitos Utilizados</h2>
+                            <ul class="list-disc list-inside text-gray-700">
+                                <li><strong>Rotas (Simuladas):</strong> Implementação de duas rotas principais (Listagem e Detalhe).</li>
+                                <li><strong>Componentes (Simulados):</strong> Funções que renderizam partes específicas da UI.</li>
+                                <li><strong>API Externa:</strong> Simulação de consumo de dados a partir do arquivo <code>vagas-db.json</code>.</li>
+                                <li><strong>Design Responsivo:</strong> Utilização de Tailwind CSS para um layout adaptável.</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <h2 class="text-xl font-semibold text-primary-blue mb-2">Tecnologias de Design</h2>
+                            <p class="text-gray-700">O design utiliza **Tailwind CSS** para classes utilitárias e **CSS customizado** para cores, sombras e transições, garantindo uma identidade visual limpa e moderna, em linha com as melhores práticas de design web.</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-center">
+                        <a href="#/" class="inline-block bg-primary-blue text-white py-2 px-6 rounded-lg btn-primary font-semibold">
+                            Voltar para as Vagas
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 2. Lógica de Roteamento Principal
+        async function renderRoute() {
+            // Garante que os dados foram carregados antes de renderizar
+            if (vagasData.length === 0) {
+                await loadVagasData();
+            }
+
+            const path = window.location.hash.slice(1) || '/'; // Pega a parte após o '#'
+
+            // Define as rotas
+            const routes = {
+                '/': () => renderVacancyList(vagasData),
+                '/sobre': () => renderAboutPage(),
+                '/vaga/:id': (match) => renderVacancyDetail(match[1]) // match[1] é o ID
+            };
+
+            let content = '';
+
+            // Tenta casar com rotas dinâmicas primeiro
+            const detailMatch = path.match(/^\/vaga\/(\d+)$/);
+            if (detailMatch) {
+                content = routes['/vaga/:id'](detailMatch);
+            }
+            // Tenta casar com rotas estáticas
+            else if (routes[path]) {
+                content = routes[path]();
+            }
+            // Rota 404 (Não Encontrada)
+            else {
+                content = `
+                    <div class="max-w-xl mx-auto p-8 bg-white rounded-xl shadow-lg text-center">
+                        <i class="fas fa-frown-open text-red-500 text-4xl mb-4"></i>
+                        <h1 class="text-2xl font-bold text-red-700">Erro 404 - Página Não Encontrada</h1>
+                        <p class="text-gray-600 mt-2">A rota <code>${path}</code> não existe.</p>
+                        <a href="#/" class="mt-6 inline-block bg-primary-blue text-white py-2 px-4 rounded-lg btn-primary">
+                            <i class="fas fa-home mr-2"></i> Ir para a Página Inicial
+                        </a>
+                    </div>
+                `;
+            }
+
+            appRoot.innerHTML = content;
+        }
+
+        // 3. Função de Carregamento de Dados (Simulando o Fetch da API)
+        async function loadVagasData() {
+            try {
+                // Simula o fetch do arquivo JSON local.
+                const response = await fetch('vagas-db.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                vagasData = await response.json();
+                console.log("Dados de vagas carregados com sucesso.");
+            } catch (error) {
+                console.error("Erro ao carregar os dados de vagas:", error);
+                appRoot.innerHTML = `
+                    <div class="max-w-xl mx-auto p-8 bg-red-100 border-l-4 border-red-500 text-red-700 rounded-xl shadow-lg">
+                        <h1 class="text-xl font-bold">Erro de API</h1>
+                        <p class="mt-2">Não foi possível carregar o arquivo <code>vagas-db.json</code>. Certifique-se de que ele está na mesma pasta e que o servidor local está configurado corretamente.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // 4. Inicialização da Aplicação
+        window.addEventListener('hashchange', renderRoute); // Escuta mudanças na hash (rota)
+        window.addEventListener('load', renderRoute); // Renderiza a rota inicial ao carregar a página
+    </script>
+</body>
+</html>
