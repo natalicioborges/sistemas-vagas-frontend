@@ -1,97 +1,44 @@
 💼 Sistema de Cadastro de Vagas (Front-End Simulado)
-Este projeto de front-end simula um sistema de vagas, desenvolvido como um exercício prático focado em componentes, rotas e design responsivo, simulando o consumo de uma API.
 
-O objetivo é replicar a estrutura e a organização de um projeto moderno, como os criados em frameworks como Angular ou React, utilizando apenas JavaScript puro, HTML e Tailwind CSS.
+Este é um projeto de front-end criado em um único arquivo HTML usando JavaScript puro para simular um sistema de gerenciamento de vagas. Ele atende aos requisitos de rotas, componentes e design.
 
-✨ Requisitos Cumpridos
-Requisito
+O objetivo é simular o consumo de dados de uma API, utilizando o arquivo local vagas-db.json.
 
-Status
+🛠️ Tecnologias
 
-Detalhes
+HTML, JavaScript (Puro): Estrutura e lógica de roteamento.
 
-API Simulado
+Tailwind CSS: Framework utilitário para um design responsivo e moderno (substituindo o Bootstrap e cumprindo o requisito de CSS criativo da UC8).
 
-✅
+JSON: Arquivo vagas-db.json para simular os dados da API.
 
-O arquivo vagas-db.json simula a resposta do backend.
+🗺️ Rotas Implementadas
 
-Duas Páginas de Rota
+A aplicação possui rotas baseadas na URL (hash routing):
 
-✅
+/: Lista todas as vagas disponíveis.
 
-Implementadas rotas para Listagem (/) e Detalhe da Vaga (/vaga/:id), além de uma página "Sobre".
+/vaga/:id: Exibe os detalhes de uma vaga específica.
 
-Design / UC8
+/sobre: Página informativa adicional.
 
-✅
+🚀 Como Executar
 
-Utilização de Tailwind CSS para design moderno, responsivo e criativo.
+Para rodar este projeto, é necessário um servidor web local devido à leitura do arquivo vagas-db.json via fetch().
 
-Organização
-
-✅
-
-Arquivos de código e dados separados para melhor estruturação.
-
-🛠️ Tecnologias Utilizadas
-Categoria
-
-Tecnologia
-
-Uso no Projeto
-
-Estrutura
-
-HTML5
-
-Componentes e layout da interface.
-
-Lógica
-
-JavaScript (Puro)
-
-Lógica de roteamento e consumo simulado da API.
-
-Design
-
-Tailwind CSS
-
-Framework utilitário para design responsivo.
-
-Dados
-
-JSON
-
-Arquivo vagas-db.json simulando o endpoint da API.
-
-🚀 Como Rodar o Projeto Localmente
-Para que a aplicação consiga carregar o arquivo vagas-db.json corretamente (via fetch()), é obrigatório executá-la a partir de um servidor web local para evitar problemas de segurança (CORS).
-
-1. Estrutura de Arquivos
-Certifique-se de que os seguintes arquivos estão na mesma pasta:
-
-/sistema-vagas-frontend
-├── index.html        # Front-End completo com JS e CSS
-├── vagas-db.json     # Dados simulados da API
-└── README.md         # Este arquivo
-
-2. Iniciando o Servidor (Método Recomendado)
-Se você tem o Node.js instalado, pode usar a ferramenta http-server:
-
-Instale (se necessário):
+Método Recomendado (com Node.js):
+Instale o http-server globalmente:
 
 npm install -g http-server
 
-Navegue até a pasta do projeto:
-
-cd [caminho_do_seu_projeto]
-
-Execute o servidor:
+Navegue até a pasta do projeto e inicie o servidor:
 
 http-server
 
-Abra seu navegador e acesse a URL que aparecer no console (ex: http://127.0.0.1:8080).
+Acesse a URL fornecida (ex: http://localhost:8080) no seu navegador.
 
-3. Opção Alternativa
-Você pode usar a extensão Live Server do VS Code. Basta clicar com o botão direito no index.html e selecionar "Open with Live Server".
+Arquivos Principais:
+
+index.html (Contém todo o front-end: HTML, JS, CSS)
+
+vagas-db.json (Dados da API)
