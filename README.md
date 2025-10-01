@@ -1,104 +1,97 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>README | Sistema de Cadastro de Vagas (Front-End Simulado)</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        h1 {
-            color: #1c3d5e;
-            border-bottom: 2px solid #3b82f6;
-            padding-bottom: 10px;
-        }
-        h2 {
-            color: #3b82f6;
-            margin-top: 25px;
-        }
-        code, pre {
-            background-color: #eee;
-            padding: 5px;
-            border-radius: 4px;
-            font-family: Consolas, monospace;
-        }
-        pre {
-            padding: 15px;
-            overflow-x: auto;
-            border: 1px solid #ddd;
-        }
-        .icon {
-            font-size: 1.2em;
-            margin-right: 5px;
-        }
-        ul {
-            padding-left: 20px;
-        }
-    </style>
-</head>
-<body>
+💼 Sistema de Cadastro de Vagas (Front-End Simulado)
+Este projeto de front-end simula um sistema de vagas, desenvolvido como um exercício prático focado em componentes, rotas e design responsivo, simulando o consumo de uma API.
 
-    <h1><span class="icon">💼</span> Sistema de Cadastro de Vagas (Front-End Simulado)</h1>
+O objetivo é replicar a estrutura e a organização de um projeto moderno, como os criados em frameworks como Angular ou React, utilizando apenas JavaScript puro, HTML e Tailwind CSS.
 
-    <p>Este projeto foi desenvolvido como um exercício prático focado na criação de um front-end moderno, utilizando conceitos de <strong>componentes</strong>, <strong>rotas</strong> e <strong>design responsivo</strong>, simulando o consumo de uma API em um ambiente que se assemelha a uma aplicação em Spring Boot/Angular.</p>
+✨ Requisitos Cumpridos
+Requisito
 
-    <h2>✨ Requisitos do Projeto</h2>
+Status
 
-    <ul>
-        <li><strong>API Simulado:</strong> O arquivo <code>vagas-db.json</code> atua como a API para o front-end.</li>
-        <li><strong>Rotas:</strong> Possui pelo menos duas rotas principais:
-            <ul>
-                <li><code>/</code> (Listagem de Vagas)</li>
-                <li><code>/vaga/:id</code> (Detalhes da Vaga)</li>
-                <li><code>/sobre</code> (Página Adicional)</li>
-            </ul>
-        </li>
-        <li><strong>Design:</strong> Utiliza <strong>Tailwind CSS</strong> e <strong>CSS customizado</strong> para um design limpo, moderno e responsivo, cumprindo o requisito de criatividade e organização de layout (conhecimento UC8).</li>
-        <li><strong>Tecnologias:</strong> HTML, JavaScript (para lógica de rotas) e Tailwind CSS.</li>
-    </ul>
+Detalhes
 
-    <h2>🚀 Como Rodar o Projeto</h2>
+API Simulado
 
-    <p>Como a aplicação é composta por arquivos estáticos e usa <code>fetch()</code> para carregar o arquivo <code>vagas-db.json</code>, é necessário executá-la a partir de um <strong>servidor web local</strong> para evitar erros de CORS (Cross-Origin Resource Sharing).</p>
+✅
 
-    <p><strong>Pré-requisitos:</strong></p>
-    <ul>
-        <li>Node.js (ou qualquer outra ferramenta que possa subir um servidor estático).</li>
-    </ul>
+O arquivo vagas-db.json simula a resposta do backend.
 
-    <h3>Opção 1: Usando <code>http-server</code> (Recomendado)</h3>
+Duas Páginas de Rota
 
-    <ol>
-        <li>Instale o pacote <code>http-server</code> globalmente via npm:
-            <pre><code>npm install -g http-server</code></pre>
-        </li>
-        <li>Navegue até a pasta onde você salvou os arquivos:
-            <pre><code>cd [caminho_do_seu_projeto]</code></pre>
-        </li>
-        <li>Inicie o servidor:
-            <pre><code>http-server</code></pre>
-        </li>
-        <li>Abra seu navegador e acesse a URL fornecida (geralmente <code>http://127.0.0.1:8080</code> ou <code>http://localhost:8080</code>).</li>
-    </ol>
+✅
 
-    <h3>Opção 2: Usando o Live Server do VS Code</h3>
+Implementadas rotas para Listagem (/) e Detalhe da Vaga (/vaga/:id), além de uma página "Sobre".
 
-    <p>Se você utiliza o VS Code, pode usar a extensão "Live Server" para abrir o arquivo <code>index.html</code>.</p>
+Design / UC8
 
-    <h2>📂 Estrutura de Arquivos</h2>
+✅
 
-    <pre><code>/
-├── index.html        # Front-End completo (HTML, JS, CSS/Tailwind)
-├── vagas-db.json     # A API simulada com a lista de vagas
+Utilização de Tailwind CSS para design moderno, responsivo e criativo.
+
+Organização
+
+✅
+
+Arquivos de código e dados separados para melhor estruturação.
+
+🛠️ Tecnologias Utilizadas
+Categoria
+
+Tecnologia
+
+Uso no Projeto
+
+Estrutura
+
+HTML5
+
+Componentes e layout da interface.
+
+Lógica
+
+JavaScript (Puro)
+
+Lógica de roteamento e consumo simulado da API.
+
+Design
+
+Tailwind CSS
+
+Framework utilitário para design responsivo.
+
+Dados
+
+JSON
+
+Arquivo vagas-db.json simulando o endpoint da API.
+
+🚀 Como Rodar o Projeto Localmente
+Para que a aplicação consiga carregar o arquivo vagas-db.json corretamente (via fetch()), é obrigatório executá-la a partir de um servidor web local para evitar problemas de segurança (CORS).
+
+1. Estrutura de Arquivos
+Certifique-se de que os seguintes arquivos estão na mesma pasta:
+
+/sistema-vagas-frontend
+├── index.html        # Front-End completo com JS e CSS
+├── vagas-db.json     # Dados simulados da API
 └── README.md         # Este arquivo
-</code></pre>
 
-</body>
-</html>
+2. Iniciando o Servidor (Método Recomendado)
+Se você tem o Node.js instalado, pode usar a ferramenta http-server:
+
+Instale (se necessário):
+
+npm install -g http-server
+
+Navegue até a pasta do projeto:
+
+cd [caminho_do_seu_projeto]
+
+Execute o servidor:
+
+http-server
+
+Abra seu navegador e acesse a URL que aparecer no console (ex: http://127.0.0.1:8080).
+
+3. Opção Alternativa
+Você pode usar a extensão Live Server do VS Code. Basta clicar com o botão direito no index.html e selecionar "Open with Live Server".
